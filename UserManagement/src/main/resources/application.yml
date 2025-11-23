@@ -5,13 +5,17 @@ spring:
     show-banner: false
 
   datasource:
-    url: jdbc:h2:mem:mydb
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    initialize: true
+    initialization-mode: always
+    schema: classpath:/schema.sql
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
+      show-sql: true
     properties:
-      hibernate.hbm2ddl.import_files: populate_users.sql
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
