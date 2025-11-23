@@ -25,4 +25,7 @@ replay_pid*
 
 .idea
 UserManagement/.mvn
-Repository/.mvn
+UserManagement/target
+
+SalesManagement/.mvn
+SalesManagement/target
