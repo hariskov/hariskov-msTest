@@ -1,6 +1,8 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    build:
+      context: ../../..
+      dockerfile: src/main/docker/db/Dockerfile
     container_name: user-management-db
     environment:
       POSTGRES_USER: postgres
@@ -18,8 +20,8 @@ services:
 
   user-management:
     build:
-      context: ../../../
-      dockerfile: src/main/docker/Dockerfile
+      context: ../../..
+      dockerfile: src/main/docker/deployment/Dockerfile
     container_name: user-management-app
     depends_on:
       postgres:
@@ -30,6 +32,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     ports:
       - "8080:8080"
+
 
 volumes:
   postgres_data:

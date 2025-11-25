@@ -1,6 +1,5 @@
 FROM eclipse-temurin:21-jre-alpine
 
-VOLUME /tmp
 COPY target/UserManagement.jar /opt/UserManagement/UserManagement.jar
 EXPOSE 8080
 WORKDIR /opt/UserManagement/
