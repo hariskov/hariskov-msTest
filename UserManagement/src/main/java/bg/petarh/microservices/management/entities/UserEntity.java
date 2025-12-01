@@ -5,21 +5,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.UUID;
-
 @Table(name = "users")
 @Entity
 public class UserEntity {
 
     @Id
     @UuidGenerator
-    private UUID id;
+    private String id;
     private String name;
 
     public UserEntity() {
     }
 
-    public UserEntity(String name, UUID id) {
+    public UserEntity(String name, String id) {
         this.name = name;
         this.id = id;
     }
@@ -28,7 +26,7 @@ public class UserEntity {
         this.name = name;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

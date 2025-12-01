@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping(value = "/v1/users")
 public class UserController {
@@ -24,7 +22,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserEntity> getUserId(@PathVariable("id") String id) {
         try {
-            UserEntity user = userService.getUser(UUID.fromString(id));
+            UserEntity user = userService.getUser(id);
             return ResponseEntity.ok().body(user);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(new UserEntity(e.getMessage()));
