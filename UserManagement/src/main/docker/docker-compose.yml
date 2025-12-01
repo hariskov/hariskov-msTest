@@ -1,22 +1,58 @@
 services:
-  postgres:
+  postgres-shard-0: # Service names
     build:
       context: ../../..
       dockerfile: src/main/docker/db/Dockerfile
-    container_name: user-management-db
+    container_name: user-db-shard-0  # Container names
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      POSTGRES_DB: shard0db  # Database names
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - shard0-data:/var/lib/postgresql/data
+  postgres-shard-1:
+    build:
+      context: ../../..
+      dockerfile: src/main/docker/db/Dockerfile
+    container_name: user-db-shard-1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shard1db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5433:5432"
+    volumes:
+      - shard1-data:/var/lib/postgresql/data
+  postgres-shard-2:
+    build:
+      context: ../../..
+      dockerfile: src/main/docker/db/Dockerfile
+    container_name: user-db-shard-2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shard2db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5434:5432"
+    volumes:
+      - shard2-data:/var/lib/postgresql/data
 
   user-management:
     build:
@@ -24,15 +60,16 @@ services:
       dockerfile: src/main/docker/deployment/Dockerfile
     container_name: user-management-app
     depends_on:
-      postgres:
+      postgres-shard-0:
         condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      postgres-shard-1:
+        condition: service_healthy
+      postgres-shard-2:
+        condition: service_healthy
     ports:
       - "8080:8080"
 
-
 volumes:
-  postgres_data:
+  shard0-data:
+  shard1-data:
+  shard2-data:
