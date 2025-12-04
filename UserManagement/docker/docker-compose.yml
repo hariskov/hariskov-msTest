@@ -1,8 +1,8 @@
 services:
   postgres-shard-0: # Service names
     build:
-      context: ../../..
-      dockerfile: src/main/docker/db/Dockerfile
+      context: ..
+      dockerfile: docker/db/Dockerfile
     container_name: user-db-shard-0  # Container names
     environment:
       POSTGRES_USER: postgres
@@ -19,8 +19,8 @@ services:
       - shard0-data:/var/lib/postgresql/data
   postgres-shard-1:
     build:
-      context: ../../..
-      dockerfile: src/main/docker/db/Dockerfile
+      context: ..
+      dockerfile: docker/db/Dockerfile
     container_name: user-db-shard-1
     environment:
       POSTGRES_USER: postgres
@@ -37,8 +37,8 @@ services:
       - shard1-data:/var/lib/postgresql/data
   postgres-shard-2:
     build:
-      context: ../../..
-      dockerfile: src/main/docker/db/Dockerfile
+      context: ..
+      dockerfile: docker/db/Dockerfile
     container_name: user-db-shard-2
     environment:
       POSTGRES_USER: postgres
@@ -56,8 +56,8 @@ services:
 
   user-management:
     build:
-      context: ../../..
-      dockerfile: src/main/docker/deployment/Dockerfile
+      context: ..
+      dockerfile: docker/deployment/Dockerfile
     container_name: user-management-app
     depends_on:
       postgres-shard-0:

@@ -1,0 +1,9 @@
+users:
+  - id: "0bcae5bb-c729-46fa-9908-016fa8dc8d83"
+    name: "John Doe"
+  - id: "aee75042-37ad-47be-b355-f245e9fd7f7f"
+    name: "Sancho Pansa"
+  - id: "58e6cec0-de26-4215-bec1-9cb14f624ce2"
+    name: "Don Qihot"
+  - id: "05d3b982-a0d5-4a74-9bf0-ea13729305aa"
+    name: "Papa Razzi"

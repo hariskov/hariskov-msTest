@@ -1,29 +1,25 @@
 package bg.petarh.microservices.management.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.UuidGenerator;
-
-@Table(name = "users")
-@Entity
 public class UserEntity {
 
-    @Id
-    @UuidGenerator
     private String id;
+
     private String name;
+
+    private Integer shardIndex;
 
     public UserEntity() {
     }
 
-    public UserEntity(String name, String id) {
-        this.name = name;
-        this.id = id;
+    public UserEntity(String message) {
+        // lazyness to create structure for errors - for simplicity will reuse
+        this("0", message, -1);
     }
 
-    public UserEntity(String name) {
+    public UserEntity(String id, String name, Integer shardIndex) {
+        this.id = id;
         this.name = name;
+        this.shardIndex = shardIndex;
     }
 
     public String getId() {
@@ -32,5 +28,21 @@ public class UserEntity {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getShardIndex() {
+        return shardIndex;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setShardIndex(Integer shardIndex) {
+        this.shardIndex = shardIndex;
     }
 }
