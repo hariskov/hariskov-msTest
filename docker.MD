@@ -66,7 +66,7 @@ services:
     ports:
       - "5432:5432"  # HOST:CONTAINER format
     volumes:
-      - shard0-data:/var/lib/postgresql/data
+      - shard0-data:/opt/msTest/data
 
   postgres-shard-1:
     build:
@@ -85,7 +85,7 @@ services:
     ports:
       - "5433:5432"  # Different host port, same container port
     volumes:
-      - shard1-data:/var/lib/postgresql/data
+      - shard1-data:/opt/msTest/data
 
   postgres-shard-2:
     build:
@@ -104,7 +104,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - shard2-data:/var/lib/postgresql/data
+      - shard2-data:/opt/msTest/data
 
   user-management:
     build:
@@ -237,7 +237,7 @@ volumes:
 services:
   postgres-shard-0:
     volumes:
-      - shard0-data:/var/lib/postgresql/data  # Usage in service
+      - shard0-data:/opt/msTest/data  # Usage in service
 ```
 
 **Key Properties:**

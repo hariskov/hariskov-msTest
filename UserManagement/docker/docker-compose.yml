@@ -16,7 +16,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - shard0-data:/var/lib/postgresql/data
+      - shard0-data:/opt/msTest/data
   postgres-shard-1:
     build:
       context: ..
@@ -34,7 +34,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - shard1-data:/var/lib/postgresql/data
+      - shard1-data:/opt/msTest/data
   postgres-shard-2:
     build:
       context: ..
@@ -52,7 +52,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - shard2-data:/var/lib/postgresql/data
+      - shard2-data:/opt/msTest/data
 
   user-management:
     build:
