@@ -1,19 +1,13 @@
 package bg.petarh.microservices.sales.controllers;
 
+import bg.petarh.microservices.sales.dto.SaleDTO;
+import bg.petarh.microservices.sales.services.SalesService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.naming.ServiceUnavailableException;
 import java.util.List;
-
-import bg.petarh.microservices.sales.entities.SaleEntity;
-import bg.petarh.microservices.sales.services.SalesService;
 
 @RestController
 @RequestMapping(value = "/v1/sales")
@@ -26,12 +20,12 @@ public class SalesController {
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SaleEntity>> getSales() {
+    public ResponseEntity<List<SaleDTO>> getSales() {
         return ResponseEntity.ok(salesService.getAllSales());
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SaleEntity> createSale(@RequestBody SaleEntity sale) {
+    public ResponseEntity<SaleDTO> createSale(@RequestBody SaleDTO sale) throws ServiceUnavailableException {
         return ResponseEntity.ok(salesService.createSale(sale));
     }
 

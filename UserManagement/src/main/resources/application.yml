@@ -19,7 +19,9 @@ datasource:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
-
+server:
+  port: 8080
+  
 logging:
   level:
     org.springframework: DEBUG

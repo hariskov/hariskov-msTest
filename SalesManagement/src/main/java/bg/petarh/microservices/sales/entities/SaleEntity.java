@@ -1,11 +1,10 @@
 package bg.petarh.microservices.sales.entities;
 
-import org.hibernate.annotations.UuidGenerator;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(name = "sales")
@@ -21,10 +20,22 @@ public class SaleEntity {
     @Column(name = "is_active")
     private boolean active;
 
-    public SaleEntity(final String id, final int amount, final boolean active) {
+    @Column(name = "user_id")
+    private String userId;
+
+    public SaleEntity(String id, int amount, boolean active, String userId) {
         this.id = id;
         this.amount = amount;
         this.active = active;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public SaleEntity() {

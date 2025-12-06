@@ -1,33 +1,41 @@
 package bg.petarh.microservices.sales.services;
 
-import org.springframework.data.domain.Example;
+import bg.petarh.microservices.sales.dto.SaleDTO;
+import bg.petarh.microservices.sales.entities.SaleEntity;
+import bg.petarh.microservices.sales.mappers.SalesMapper;
+import bg.petarh.microservices.sales.repository.SalesRepository;
+import bg.petarh.microservices.sales.rest.api.UserValidationService;
 import org.springframework.stereotype.Service;
 
+import javax.naming.ServiceUnavailableException;
 import java.util.List;
-
-import bg.petarh.microservices.sales.entities.SaleEntity;
-import bg.petarh.microservices.sales.repository.SalesRepository;
 
 @Service
 public class SalesService {
 
     private final SalesRepository salesRepository;
+    private final UserValidationService userValidationService;
 
-    SalesService(final SalesRepository salesRepository) {
+    SalesService(final SalesRepository salesRepository, UserValidationService userValidationService) {
         this.salesRepository = salesRepository;
+        this.userValidationService = userValidationService;
     }
 
-    public List<SaleEntity> getAllSales() {
-        SaleEntity exampleSale = new SaleEntity();
-        exampleSale.setActive(true);
-        return this.salesRepository.findAll(Example.of(exampleSale));
+    public List<SaleDTO> getAllSales() {
+        return SalesMapper.map(this.salesRepository.findAll());
     }
 
-    public SaleEntity createSale(final SaleEntity sale) {
+    public SaleDTO createSale(final SaleDTO sale) throws ServiceUnavailableException {
+
+        if (!userValidationService.validateUserExists(sale.getUserId())) {
+            return null; //TODO - lazyness
+        }
+
         SaleEntity newSale = new SaleEntity();
         newSale.setActive(true);
         newSale.setAmount(sale.getAmount());
-        return salesRepository.save(newSale);
+        newSale.setUserId(sale.getUserId());
+        return SalesMapper.map(salesRepository.save(newSale));
     }
 
     public void deleteSaleById(final String id) {
